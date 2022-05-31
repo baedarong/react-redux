@@ -75,3 +75,29 @@ export default connect(mapStateToProps, mapDispatchToProps)(Home);
 ```
 
 https://react-redux.js.org/api/hooks#usedispatch
+
+# 4. localStorage와 sessionStorage, 그리고 redux-persist
+
+- localstorage와 sessionstorage
+  이 두개의 저장소는 브라우저(window)에서 기본적으로 제공하는 저장소(storage)이다. 이 저장소들은 application 전역에서 접근이 가능하다. 하나의 특징은 storage에 저장된 data는 JSON형태여야 하고 (JSON.stringify 사용하여 데이터 변환) 저장소에서 막 꺼낸 데이터는 JSON형태라는 것이다.(JSON.parse 사용하여 데이터 변환)
+  localstorage는 우리가 직접 지우기 전까지 저장되는 반면 sessionstorage는 session이 유지되는 한에서만 데이터가 유지된다.
+  session이란 브라우저의 탭 이라고 생각하면 편하다. 탭을 닫지않는 이상 essiongstorage에 저장된 데이터는 얼마든지 접근이 가능하다(새로고침 포함). 하지만 브라우저 탭을 닫게되면 sessionstorage에 저장된 데이터는 사라진다.
+
+```
+const reducer = (state = JSON.parse(localStorage.getItem(STATE)), action) => {
+  switch (action.type) {
+    case ADD:
+      const addState = [{ text: action.text, id: Date.now() }, ...state];
+      localStorage.setItem(STATE, JSON.stringify(addState));
+      return addState;
+    case DELETE:
+      const deleteState = state.filter(toDo => toDo.id !== action.id);
+      localStorage.setItem(STATE, JSON.stringify(deleteState));
+      return deleteState;
+    default:
+      return state;
+  }
+};
+```
+
+https://velog.io/@_jouz_ryul/LocalStorage-SessiongStorage-%EA%B7%B8%EB%A6%AC%EA%B3%A0-Redux-Persist
