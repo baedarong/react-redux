@@ -27,7 +27,7 @@ const Home = () => {
             <input type="text" value={text} onChange={onChange}></input>
             <button>Add</button>
         </form>
-        <ul>{toDoList.map((toDo)=> <Todo {...toDo} key={toDo.id}> </Todo>)}</ul>
+        <ul>{toDoList?.map((toDo)=> <Todo {...toDo} key={toDo.id}> </Todo>)}</ul>
         </>
     )  
 }
